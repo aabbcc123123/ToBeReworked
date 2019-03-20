@@ -1,129 +1,161 @@
 #include <stdio.h>
 #include <string.h>
 
-void paixu(int a[][4],int *b,int num,int *result);
+void paixu(int a[][4],int *b,int num,int x);
+void nuo(int *b,int x,int num);
 
 int main ()
 {
 	
-	int n=0;//¿¼Éú×ÜÊı
-	int l=0;//×îµÍÂ¼È¡·ÖÊıÏß
-	int h=0;//ÓÅÏÈÂ¼È¡Ïß 
+	int n=0;//è€ƒç”Ÿæ€»æ•°
+	int l=0;//æœ€ä½å½•å–åˆ†æ•°çº¿
+	int h=0;//ä¼˜å…ˆå½•å–çº¿ 
 	
 	scanf("%d %d %d",&n,&l,&h);
-	int m=n;//´ïµ½×îµÍ·ÖÊıÏßµÄÈËÊı 
-	int b[4][n];  //Ê¥ÈË£¬¾ı×Ó£¬ÀàÈı£¬ÆäËû 
-	int num[4]={0};//Ê¥ÈË¾ı×ÓÀàÈıÆäËûµÄÊıÁ¿ 
+	int m=n;//è¾¾åˆ°æœ€ä½åˆ†æ•°çº¿çš„äººæ•° 
+	int b[4][n];  //åœ£äººï¼Œå›å­ï¼Œç±»ä¸‰ï¼Œå…¶ä»– 
+	b[0][0]=0,b[1][0]=0,b[2][0]=0,b[3][0]=0;//åˆå§‹åŒ–b 
+	int num[4]={0};//åœ£äººå›å­ç±»ä¸‰å…¶ä»–çš„æ•°é‡ 
 	
 	int a[n][4];
-	//¶ÁÈëÊı¾İ
+	//è¯»å…¥æ•°æ®
 	for (int i=0;i<n;i++){
 		scanf("%d %d %d",&a[i][0],&a[i][1],&a[i][2]);
-		a[i][3]=a[i][1]+a[i][2];//¼ÆËãÃ¿¸öÈËµÄ×Ü·Ö 
-		if (a[i][1]<l||a[i][2]<l) m--;//²»¼°¸ñµÄÅÅ³ı 
+		a[i][3]=a[i][1]+a[i][2];//è®¡ç®—æ¯ä¸ªäººçš„æ€»åˆ† 
+		if (a[i][1]<l||a[i][2]<l) m--;//ä¸åŠæ ¼çš„æ’é™¤ 
 		else{
-			if (a[i][1]>=h&&a[i][2]>=h) b[0][num[0]]=i,num[0]++;//ÕÒ³öÊ¥ÈË 
-			else if (a[i][1]>=h&&a[i][2]<h) b[1][num[1]]=i,num[1]++;//ÕÒ³ö¾ı×Ó 
-			else if (a[i][1]>a[i][2]) b[2][num[2]]=i,num[2]++;//ÕÒ³öÓŞÈË 
-			else b[3][num[3]]=i,num[3]++;//ÕÒ³öĞ¡ÈË 
-		}
+			if (a[i][1]>=h&&a[i][2]>=h){//æ‰¾å‡ºåœ£äºº
+				if (num[0]==0) b[0][0]=i;//åˆå§‹åŒ–b 
+				num[0]++;
+				paixu(a,b[0],num[0],i);	
+				//è°ƒè¯•ä¸€ä¸‹ä¸‹
+//				printf("i=%dæ—¶ï¼Œnum[0]=%d,b[0]=",i,num[0]);
+//				for (int j=0;j<num[0];j++){
+//					printf("%d\t",b[0][j]);
+//				}
+//				printf("\n");
+			}else if (a[i][1]>=h&&a[i][2]<h){//æ‰¾å‡ºå›å­
+				if (num[1]==0) b[1][0]=i;//åˆå§‹åŒ–b
+				num[1]++;
+				paixu(a,b[1],num[1],i);
+				//è°ƒè¯•ä¸€ä¸‹ä¸‹
+//				printf("i=%dæ—¶ï¼Œnum[1]=%d,b[1]=",i,num[1]);
+//				for (int j=0;j<num[1];j++){
+//					printf("%d\t",b[1][j]);
+//				}
+//				printf("\n");
+				 
+			}else if (a[i][1]>a[i][2]){//æ‰¾å‡ºç±»ä¸‰ 
+				if (num[2]==0) b[2][0]=i;//åˆå§‹åŒ–b
+				num[2]++;
+				paixu(a,b[2],num[2],i);
+				//è°ƒè¯•ä¸€ä¸‹ä¸‹
+//				printf("i=%dæ—¶ï¼Œnum[2]=%d,b[2]=",i,num[2]);
+//				for (int j=0;j<num[2];j++){
+//					printf("%d\t",b[2][j]);
+//				}
+//				printf("\n");
+			}else {//æ‰¾å‡ºå…¶ä»– 
+				if (num[3]==0) b[3][0]=i;//åˆå§‹åŒ–b
+				num[3]++;
+				paixu(a,b[3],num[3],i);
+				//è°ƒè¯•ä¸€ä¸‹ä¸‹
+//				printf("i=%dæ—¶ï¼Œnum[3]=%d,b[3]=",i,num[3]);
+//				for (int j=0;j<num[3];j++){
+//					printf("%d\t",b[3][j]);
+//				}
+//				printf("\n");
+			}
+		} 
 	}
 	
-	
-	//µ÷ÊÔÒ»ÏÂÏÂ
-//	printf("m=%d\n",m); 
-//	//Êä³öÕû¸öÊı×é
+	 
+	//è°ƒè¯•ä¸€ä¸‹ä¸‹
+	//è¾“å‡ºæ•´ä¸ªæ•°ç»„
 //	for (int i=0;i<n;i++){
 //		for (int j=0;j<4;j++){
 //			printf("%d\t",a[i][j]);
 //		}
 //		printf("\n");
 //	} 
-//	//·ÖÀàµÄ½á¹û
+//	//åˆ†ç±»çš„ç»“æœ
 //	for (int i=0;i<4;i++){
-//		printf("num[%d]=\t",i);
+//		printf("b[%d]=\t",i);
 //		for (int j=0;j<num[i];j++){
 //			printf("%d\t",b[i][j]);
 //		}
 //		printf("\n");
 //	} 
-	
-	
-	//¿ªÊ¼ÅÅĞò
-//	printf("************************\n");
-	int result[m];//×îºóÊä³öµÄ½á¹û
-	//Êä³öÊ¥ÈË 
-	paixu(a,b[0],num[0],result);
-	for (int i=0;i<num[0];i++)
-		printf("%d %d %d\n",a[result[i]][0],a[result[i]][1],a[result[i]][2]);
-	//Êä³ö¾ı×Ó 
-	paixu(a,b[1],num[1],result);
-	for (int i=0;i<num[1];i++)
-		printf("%d %d %d\n",a[result[i]][0],a[result[i]][1],a[result[i]][2]);
-	//Êä³öÀàÈı 
-	paixu(a,b[2],num[2],result);
-	for (int i=0;i<num[2];i++)
-		printf("%d %d %d\n",a[result[i]][0],a[result[i]][1],a[result[i]][2]);
-	//Êä³öÆäËû 
-	paixu(a,b[3],num[3],result);
-	for (int i=0;i<num[3];i++)
-		printf("%d %d %d\n",a[result[i]][0],a[result[i]][1],a[result[i]][2]);
-//	printf("************************\n");
-	
-	//µ÷ÊÔ£¬¿´¿´result¶¼ÊÇĞ©¸öÉ¶
-//	
-//	for (int i=0;i<num[0];i++){
-//		printf("%d\t",result[i]);
-//	} 
-//	printf("\n");
+
+	//è¾“å‡º
+	printf("%d\n",m);
+	for (int i=0;i<4;i++){
+		for (int j=0;j<num[i];j++){
+			printf("%d %d %d\n",a[b[i][j]][0],a[b[i][j]][1],a[b[i][j]][2]);
+		}
+		
+	} 
 	
 	
 	return 0;
 	}
 
-void paixu(int a[][4],int *b,int num,int *result)//numÎª½ÇÉ«ÊıÁ¿ 
+void paixu(int a[][4],int *b,int num,int x)//xå°±æ˜¯é‚£ä¸ªi 
 {
 	
-	int n=0;//ÒÑ¾­ÅÅÁË¼¸¸öÊıÁË 
-	int max=0,loc=0;//×î¸ß·ÖºÍÎ»ÖÃ
-	result[0]=b[0];
-	do{
-		//³õÊ¼»¯maxºÍloc
-		for (int i=0;i<num;i++){
-			if (b[i]!=-1){
-				max=a[b[i]][3];
-				loc=i;
-				break;
-			}
-		} 
-		for (int i=1;i<num;i++){
-			if (b[i]!=-1){
-				if (a[b[i]][3]>max){
-					max=a[b[i]][3];
-					loc=i;
-				}
-				if (a[b[i]][3]=max){//×Ü·ÖÏàµÈÊ± 
-					if (a[b[i]][1]>a[b[loc]][1]){
-						max=a[b[i]][3];
-						loc=i;
-					} 
-					if (a[b[i]][1]==a[b[loc]][1]){//µÂ·ÖÏàµÈÊ± 
-						if (a[b[i]][0]<a[b[loc]][0]){
-							max=a[b[i]][3];
-							loc=i;
-						} 
-					}
-				}
-			}
+	for (int i=0;i<num;i++){
+		
+		if (a[x][3]>a[b[i]][3]){//å¦‚æœæ€»åˆ†æ›´é«˜çš„è¯ 
+
+			nuo(b,i,num);
+			b[i]=x;
 			
+			break;
+		}
+
+		if (a[x][3]==a[b[i]][3]){//å¦‚æœæ€»åˆ†ç›¸ç­‰çš„è¯ 
+			if (a[x][1]>a[b[i]][1]){//å¦‚æœå¾·åˆ†æ›´é«˜çš„è¯ 
+				
+				nuo(b,i,num);
+				b[i]=x;
+				
+				break; 
+			} 
+			if (a[x][1]==a[b[i]][1]){//å¦‚æœå¾·åˆ†ç›¸ç­‰çš„è¯ 
+				if (a[x][0]<a[b[i]][0]){//å¦‚æœå­¦å·æ›´ä½çš„è¯ 
+					
+					nuo(b,i,num);
+					b[i]=x;
+					
+					break;
+				} 
+			}
 		}
 		
-		//¼ì²é¹ıÒ»±éºó
-		result[n]=b[loc];
-		b[loc]=-1;
-		n++;
+		if (i==num-2){//å¦‚æœæ˜¯æœ€å°çš„è¯ 
+			b[i+1]=x;
+			
+			break;
+		}
 		
-	} while (n<num); 
+		
+	}
 	
- } 
+	
+	 
+	
+}
+
+
+//æŒªä½ç½® 
+void nuo(int *b,int x,int num)//xå°±æ˜¯paixué‡Œé¢çš„é‚£ä¸ªi
+{
+	
+	for (int i=num-1;i>x;i--){
+		b[i]=b[i-1];
+	} 
+	
+} 
+
+
 
